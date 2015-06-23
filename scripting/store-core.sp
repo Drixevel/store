@@ -43,6 +43,8 @@ new g_menuItemCount = 0;
 
 new bool:g_allPluginsLoaded = false;
 
+new bool:g_bHideChatCommands = false;
+
 new Handle:g_hOnChatCommandForward;
 new Handle:g_hOnChatCommandPostForward;
 new Handle:g_hOnCoreLoaded;
@@ -160,6 +162,7 @@ LoadConfig()
 
 	g_firstConnectionCredits = KvGetNum(kv, "first_connection_credits");
 	g_hideMenuItemDescriptions = bool:KvGetNum(kv, "hide_menu_descriptions", 0);
+	g_bHideChatCommands = bool:KvGetNum(kv, "hide_chat_commands", 0);
 	g_serverID = KvGetNum(kv, "server_id", -1);
 	
 	CloseHandle(kv);
@@ -225,7 +228,7 @@ public Action:OnClientSayCommand(client, const String:command[], const String:sA
 			Call_PushString(cmds[1]);
 			Call_Finish();
 
-			if (cmds[0][0] == 0x2F)
+			if ((cmds[0][0] == 0x2F) || g_bHideChatCommands)
 			{
 				return Plugin_Handled;
 			}
