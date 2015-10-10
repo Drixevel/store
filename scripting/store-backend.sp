@@ -1747,7 +1747,7 @@ public void SQLCall_ConnectToDatabase(Handle owner, Handle hndl, const char[] er
 		
 		return;
 	}
-	
+	SQL_SetCharset(g_hSQL, "utf8");
 	g_hSQL = CloneHandle(hndl);
 	CloseHandle(hndl);
 	
